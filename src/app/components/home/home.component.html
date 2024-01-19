@@ -1,0 +1,16 @@
+
+<div class="container">
+  <h2>Últimos Pacientes</h2>
+  <br>
+  <div>
+    <br>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let paciente of ultimosPacientes">
+      <img [src]="paciente.fotoPersonal" alt="Foto de {{ paciente.nombre }}" class="patient-image">
+      {{ paciente.nombre }} {{ paciente.apellido }}
+    </li>
+    <br>
+  </ul>
+
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="container">
+  <h2>Listado de Pacientes</h2>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let paciente of pacientes">
+      <img [src]="paciente.fotoPersonal" alt="Foto de {{ paciente.nombre }}" class="patient-image">
+      {{ paciente.nombre }} {{ paciente.apellido }}
+      <div class="buttons-container">
+        <button (click)="actualizarPaciente(paciente._id)" class="custom-btn custom-btn-primary">Actualizar</button>
+        <button (click)="eliminarPaciente(paciente._id)" class="custom-btn custom-btn-danger">Eliminar</button>
+      </div>
+    </li>
+  </ul>
+</div>

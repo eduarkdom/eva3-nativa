@@ -1,0 +1,19 @@
+nav {
+    display: flex;
+    justify-content: center;
+    background-color: #493f56; ; /* Color de fondo similar a Google */
+    padding: 10px;
+  }
+
+  nav a {
+    margin: 0 15px; /* Espacio entre los elementos del menú */
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s ease-in-out;
+  }
+
+  nav a:hover {
+    color: #e0e0e0; /* Cambio de color al pasar el ratón similar a Google */
+  }

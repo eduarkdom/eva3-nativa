@@ -1,0 +1,46 @@
+<div>
+  <h2>Nuevo Registro</h2>
+  <form (submit)="agregarPaciente()" class="registro-form">
+    <table>
+      <tr>
+        <td><label for="rut">RUT:</label></td>
+        <td><input type="text" id="rut" name="rut" [(ngModel)]="paciente.rut" required></td>
+      </tr>
+      <tr>
+        <td><label for="nombre">Nombre:</label></td>
+        <td><input type="text" id="nombre" name="nombre" [(ngModel)]="paciente.nombre" required></td>
+      </tr>
+      <tr>
+        <td><label for="edad">Edad:</label></td>
+        <td><input type="number" id="edad" name="edad" [(ngModel)]="paciente.edad" required></td>
+      </tr>
+      <tr>
+        <td><label for="sexo">Sexo:</label></td>
+        <td>
+          <select id="sexo" name="sexo" [(ngModel)]="paciente.sexo" required>
+            <option value="masculino">Masculino</option>
+            <option value="femenino">Femenino</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="enfermedad">Enfermedad:</label></td>
+        <td><input type="text" id="enfermedad" name="enfermedad" [(ngModel)]="paciente.enfermedad" required></td>
+      </tr>
+      <tr>
+        <td><label for="fechaIngreso">Fecha de Ingreso:</label></td>
+        <td><input type="date" id="fechaIngreso" name="fechaIngreso" [(ngModel)]="paciente.fechaIngreso" required></td>
+      </tr>
+      <tr>
+        <td><label for="foto">Foto:</label></td>
+        <td>
+          <input type="file" id="foto" name="foto" (change)="handleFileInput($event)">
+          <p *ngIf="fileError">{{ fileError }}</p>
+        </td>
+      </tr>
+    </table>
+    <div class="form-group center">
+      <button type="submit" class="rounded-button">Agregar Paciente</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,38 @@
+<div class="container">
+  <h2>Búsqueda Personalizada</h2>
+  <form class="busqueda-form">
+    <table class="table">
+      <tr>
+        <td>
+          <label for="parametro">Buscar por:</label>
+        </td>
+        <td>
+          <select id="parametro" class="form-control" [(ngModel)]="criterios.parametro">
+            <option value="sexo">Sexo</option>
+            <option value="fechaIngreso">Fecha de Ingreso</option>
+            <option value="enfermedad">Enfermedad</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="valor">Valor:</label>
+        </td>
+        <td>
+          <input type="text" id="valor" class="form-control smaller-input" [(ngModel)]="criterios.valor" />
+        </td>
+      </tr>
+    </table>
+
+    <button class="rounded-button btn btn-primary" (click)="buscarPacientes()">Buscar</button>
+  </form>
+
+  <div *ngIf="pacientes.length > 0">
+    <h3>Resultados de la Búsqueda:</h3>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let paciente of pacientes">
+        {{ paciente.nombre }} {{ paciente.apellido }} - {{ paciente.fotoPersonal }}
+      </li>
+    </ul>
+  </div>
+</div>

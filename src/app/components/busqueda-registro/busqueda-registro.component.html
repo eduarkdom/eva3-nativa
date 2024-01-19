@@ -1,0 +1,32 @@
+<div class="container">
+    <h2>Búsqueda Personalizada</h2>
+    <!-- Campos de búsqueda -->
+    <div class="form-group">
+      <label for="sexo">Sexo:</label>
+      <input type="text" id="sexo" class="form-control" [(ngModel)]="criterios.sexo" />
+    </div>
+  
+    <div class="form-group">
+      <label for="fechaIngreso">Fecha de Ingreso:</label>
+      <input type="text" id="fechaIngreso" class="form-control" [(ngModel)]="criterios.fechaIngreso" />
+    </div>
+  
+    <div class="form-group">
+      <label for="enfermedad">Enfermedad:</label>
+      <input type="text" id="enfermedad" class="form-control" [(ngModel)]="criterios.enfermedad" />
+    </div>
+
+  
+
+    <button class="btn btn-primary" (click)="buscarPacientes()">Buscar</button>
+  
+    <div *ngIf="pacientes.length > 0">
+      <h3>Resultados de la Búsqueda:</h3>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let paciente of pacientes">
+          {{ paciente.nombre }} {{ paciente.apellido }} - {{ paciente.fotoPersonal }}
+        </li>
+      </ul>
+    </div>
+  </div>
+  
