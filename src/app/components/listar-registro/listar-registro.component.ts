@@ -1,4 +1,3 @@
-// En el archivo listar-registro.component.ts
 import { Component, OnInit } from '@angular/core';
 import { PacienteService } from '../../services/paciente.service';
 import { Router } from '@angular/router';
@@ -10,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class ListarRegistroComponent implements OnInit {
   pacientes: any[] = [];
+  imagenPorDefectoURL = 'URL_DE_LA_IMAGEN_POR_DEFECTO.jpg';
 
   constructor(private pacienteService: PacienteService, private router: Router) {}
 
@@ -20,7 +20,18 @@ export class ListarRegistroComponent implements OnInit {
   cargarPacientes() {
     this.pacienteService.obtenerTodosLosPacientes().subscribe(
       (result: any) => {
-        this.pacientes = result.patients;
+        this.pacientes = result.patients.map((paciente: any) => {
+          this.pacienteService.obtenerFotoPaciente(paciente.fotoPersonal).subscribe(
+            (foto: any) => {
+              paciente.fotoPersonal = URL.createObjectURL(foto);
+            },
+            (error: any) => {
+              console.error('Error al obtener foto del paciente:', error);
+              paciente.fotoPersonal = this.imagenPorDefectoURL;
+            }
+          );
+          return paciente;
+        });
       },
       (error: any) => {
         console.error('Error al obtener pacientes:', error);
@@ -32,7 +43,6 @@ export class ListarRegistroComponent implements OnInit {
     if (confirm('¿Estás seguro de eliminar este paciente?')) {
       this.pacienteService.eliminarPaciente(id).subscribe(
         () => {
-          
           this.cargarPacientes();
         },
         (error: any) => {
@@ -45,5 +55,10 @@ export class ListarRegistroComponent implements OnInit {
   actualizarPaciente(id: string) {
     this.router.navigate(['/registro/actualizar', id]);
   }
-  
+
+  getImagenURL(paciente: any): string {
+    return paciente.fotoPersonal ? 
+      URL.createObjectURL(paciente.fotoPersonal as Blob) :
+      this.imagenPorDefectoURL;
+  }
 }

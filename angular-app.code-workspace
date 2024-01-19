@@ -1,0 +1,40 @@
+{
+	"folders": [
+		{
+			"path": "../../../../angular-app"
+		},
+		{
+			"path": "../../../../ionic-apps"
+		},
+		{
+			"path": "../../../../holamundots"
+		},
+		{
+			"path": "../../../../multinativa"
+		},
+		{
+			"path": "../../../../API"
+		},
+		{
+			"path": "../../../MULTIPLATAFORMA/pmp-barcode"
+		},
+		{
+			"path": "../../ionic-apps/eva1/eva2"
+		},
+		{
+			"path": "../../../../multitaller3"
+		},
+		{
+			"path": "../../../NATIVA/API"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "../../react-apps/react"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "holamundots"
+	}
+}

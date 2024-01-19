@@ -1,7 +1,7 @@
 <div class="container">
   <h2>Búsqueda Personalizada</h2>
   <form class="busqueda-form">
-    <table class="table">
+    <table class="table-form">
       <tr>
         <td>
           <label for="parametro">Buscar por:</label>
@@ -22,9 +22,12 @@
           <input type="text" id="valor" class="form-control smaller-input" [(ngModel)]="criterios.valor" />
         </td>
       </tr>
+      <tr>
+        <td colspan="2" class="text-center">
+          <button class="rounded-button btn btn-primary" (click)="buscarPacientes()">Buscar</button>
+        </td>
+      </tr>
     </table>
-
-    <button class="rounded-button btn btn-primary" (click)="buscarPacientes()">Buscar</button>
   </form>
 
   <div *ngIf="pacientes.length > 0">

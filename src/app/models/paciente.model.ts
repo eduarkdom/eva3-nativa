@@ -3,8 +3,8 @@ export interface Paciente {
   nombre: string;
   edad: number;
   sexo: string;
-  fotoPersonal: string;
-  fechaIngreso: Date;
   enfermedad: string;
+  fechaIngreso?: Date;
+  fotoPersonal?: String;
   revisado: boolean;
 }

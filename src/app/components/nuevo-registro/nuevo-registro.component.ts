@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+// En tu archivo nuevo-registro.component.ts
+
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PacienteService } from 'src/app/services/paciente.service';
 
@@ -7,79 +9,86 @@ import { PacienteService } from 'src/app/services/paciente.service';
   templateUrl: './nuevo-registro.component.html',
   styleUrls: ['./nuevo-registro.component.css']
 })
-export class NuevoRegistroComponent {
-  paciente: any = {
-    rut: '',
-    nombre: '',
-    edad: null,
-    sexo: '',
-    fotoPersonal: '',
-    fechaIngreso: new Date(),
-    enfermedad: '',
-    revisado: false
-  };
+export class NuevoRegistroComponent implements OnInit {
+  paciente: any = {};
+  
+  errorMessage: string = '';
 
-  fileError: string | null = null;
-  selectedFile: File | null = null;
+  imagenPorDefectoURL = 'https://img.freepik.com/vector-premium/icono-perfil-usuario-estilo-plano-ilustracion-vector-avatar-miembro-sobre-fondo-aislado-concepto-negocio-signo-permiso-humano_157943-15752.jpg'
 
   constructor(private pacienteService: PacienteService, private router: Router) {}
+
+  ngOnInit(): void {}
 
   agregarPaciente() {
     if (!this.validateForm()) {
       return;
     }
 
-    if (this.selectedFile) {
-      this.pacienteService.subirFotoPaciente(this.paciente.rut, this.selectedFile).subscribe(
-        () => {
-          this.agregarPacienteInfo();
-        },
-        (error) => {
-          console.error('Error al subir la foto:', error);
-          alert('Error al agregar la foto del paciente');
-        }
-      );
-    } else {
-      this.agregarPacienteInfo();
-    }
-  }
-
-  private agregarPacienteInfo() {
     this.pacienteService.agregarPaciente(this.paciente).subscribe(
-      () => {
-        this.router.navigate(['/']);
-        alert('Paciente agregado con éxito');
+      (response) => {
+        console.log('Paciente agregado correctamente:', response);
+        alert('Paciente agregado correctamente');
+        this.router.navigate(['/registro/listar']);
       },
       (error) => {
-        console.error('Error al agregar el paciente:', error);
-        if (error && error.error && error.error.message) {
-          alert(error.error.message);
-        } else {
-          alert('Error al agregar el paciente. Por favor, inténtalo de nuevo.');
-        }
+        console.error('Error al agregar paciente:', error);
+        this.errorMessage = 'Error al agregar paciente. Por favor, verifica los datos e intenta nuevamente.';
+        alert(this.errorMessage);
       }
     );
   }
 
   handleFileInput(event: any) {
-    const file: File = event.target.files[0];
-
-    if (file) {
-      const fileSizeInMB = file.size / (1024 * 1024);
-
-      if (fileSizeInMB > 20) {
-        this.fileError = 'El tamaño del archivo no puede ser mayor a 20 MB.';
-        this.selectedFile = null;
-        return;
-      } else {
-        this.fileError = null;
-        this.selectedFile = file;
-      }
+    const fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      const file: File = fileList[0];
+      this.paciente.fotoPersonal = file;
     }
   }
 
+
+  
+
   private validateForm(): boolean {
-    return !!this.paciente.rut && !!this.paciente.nombre && this.paciente.edad > 0 &&
-           !!this.paciente.sexo && !!this.paciente.enfermedad;
+    const rutRegex = /^\d{1,2}\.\d{3}\.\d{3}[-][0-9kK]{1}$/;
+
+    const validationErrors = [];
+
+    if (!this.paciente.rut || !rutRegex.test(this.paciente.rut)) {
+      validationErrors.push('El campo Rut es obligatorio y debe tener puntos y guion.');
+    }
+
+    if (!this.paciente.nombre) {
+      validationErrors.push('El campo Nombre es obligatorio.');
+    }
+
+    if (!this.paciente.edad || isNaN(this.paciente.edad) || this.paciente.edad <= 0) {
+      validationErrors.push('El campo Edad es obligatorio y debe ser un número mayor a cero.');
+    }
+
+    if (!this.paciente.sexo) {
+      validationErrors.push('El campo Sexo es obligatorio.');
+    }
+
+    if (!this.paciente.enfermedad) {
+      validationErrors.push('El campo Enfermedad es obligatorio.');
+    }
+
+    if (validationErrors.length > 0) {
+      const errorMessage = validationErrors.join('\n');
+      alert(errorMessage);
+      return false;
+    }
+
+    return true;
   }
+
+   public getImagenURL(): string {
+    return this.paciente.fotoPersonal ? 
+      URL.createObjectURL(this.paciente.fotoPersonal) : 
+      this.imagenPorDefectoURL;
+  }
+
+
 }

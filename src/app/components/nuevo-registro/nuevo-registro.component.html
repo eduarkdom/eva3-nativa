@@ -29,14 +29,17 @@
       </tr>
       <tr>
         <td><label for="fechaIngreso">Fecha de Ingreso:</label></td>
-        <td><input type="date" id="fechaIngreso" name="fechaIngreso" [(ngModel)]="paciente.fechaIngreso" required></td>
+        <td><input type="date" id="fechaIngreso" name="fechaIngreso" [(ngModel)]="paciente.fechaIngreso"></td>
       </tr>
       <tr>
-        <td><label for="foto">Foto:</label></td>
+        <td><label for="file">Foto:</label></td>
         <td>
-          <input type="file" id="foto" name="foto" (change)="handleFileInput($event)">
-          <p *ngIf="fileError">{{ fileError }}</p>
+          <input type="file" id="file" name="file" (change)="handleFileInput($event)">
         </td>
+      </tr>
+      <tr>
+        <td><label for="revisado">Revisado</label></td>
+        <td><input type="checkbox" id="revisado" name="revisado" [(ngModel)]="paciente.revisado"></td>
       </tr>
     </table>
     <div class="form-group center">
@@ -44,3 +47,15 @@
     </div>
   </form>
 </div>
+
+<div>
+  <h2>Información del Paciente</h2>
+  <p><strong>RUT:</strong> {{ paciente.rut }}</p>
+  <p><strong>Nombre:</strong> {{ paciente.nombre }}</p>
+  <p><strong>Edad:</strong> {{ paciente.edad }}</p>
+  <p><strong>Sexo:</strong> {{ paciente.sexo }}</p>
+  <p><strong>Enfermedad:</strong> {{ paciente.enfermedad }}</p>
+  <p><strong>Fecha de Ingreso:</strong> {{ paciente.fechaIngreso | date }}</p>
+  <p><strong>Revisado:</strong> {{ paciente.revisado ? 'Sí' : 'No' }}</p>
+  <p><strong>Foto Personal:</strong> </p>
+  <img [src]="getImagenURL()" alt="Foto del paciente">
